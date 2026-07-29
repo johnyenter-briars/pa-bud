@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — PA Bud</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --text: #1f2328;
+    --muted: #59636e;
+    --accent: #d32f2f;
+    --border: #d1d9e0;
+    --bg: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text: #e6edf3;
+      --muted: #9198a1;
+      --accent: #f47067;
+      --border: #3d444d;
+      --bg: #0d1117;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.65 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  h1 {
+    font-size: 1.9em;
+    line-height: 1.25;
+    margin: 0 0 4px;
+  }
+  .subtitle {
+    color: var(--muted);
+    margin: 0 0 32px;
+  }
+  h2 {
+    font-size: 1.25em;
+    margin: 36px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  p, li { margin: 12px 0; }
+  ul { padding-left: 24px; }
+  .tldr {
+    border-left: 4px solid var(--accent);
+    background: rgba(211, 47, 47, 0.06);
+    padding: 14px 18px;
+    border-radius: 0 6px 6px 0;
+    margin: 24px 0 8px;
+  }
+  .tldr strong { color: var(--accent); }
+  footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.9em;
+  }
+  a { color: inherit; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Privacy Policy</h1>
+  <p class="subtitle">PA Bud — Chrome extension for Power Automate<br>Effective date: July 20, 2026</p>
+
+  <div class="tldr">
+    <p><strong>Short version:</strong> this extension does not collect, store, transmit, or share any data about you. Everything it does happens inside your own browser, on Power Automate pages, using your existing Microsoft login. Nothing ever leaves your machine.</p>
+  </div>
+
+  <h2>What the extension does</h2>
+  <p>PA Bud runs only on Microsoft Power Automate pages (<code>make.powerautomate.com</code> and <code>flow.microsoft.com</code>). It reads the flow run history shown on the page and retrieves failure details for failed runs by calling the same Microsoft Power Automate API the portal itself uses, authenticated by the session you are already signed in with. The error details are displayed directly in the page.</p>
+
+  <h2>Data collection</h2>
+  <p>None. The extension does not collect, log, or transmit:</p>
+  <ul>
+    <li>personal information or identifiers of any kind</li>
+    <li>your flows, runs, error messages, or any business data</li>
+    <li>browsing activity, analytics, or telemetry</li>
+    <li>credentials or authentication tokens (your session token is used in-memory, within the page, solely to call Microsoft's API on your behalf, exactly as the portal does)</li>
+  </ul>
+
+  <h2>Data storage</h2>
+  <p>The only thing the extension stores is your "Failed only" filter preference, kept in your browser's local storage on the Power Automate site. It never leaves your browser and is removed if you clear site data or uninstall the extension.</p>
+
+  <h2>Third parties</h2>
+  <p>The extension communicates exclusively with Microsoft's Power Automate service, and only in response to your actions on Power Automate pages. There are no third-party services, no external servers, no analytics providers, and no advertising of any kind. All code ships inside the extension package; nothing is loaded remotely.</p>
+
+  <h2>Permissions</h2>
+  <p>The extension requests access only to Power Automate pages, which it needs to display error details in the run history. It requests no other browser permissions — no access to your other tabs, history, bookmarks, or any other site.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If a future version of the extension ever changes how it handles data, this policy will be updated before that version is published, and the extension's store listing will reflect it.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy or the extension: <a href="mailto:bscarlav@gmail.com">bscarlav@gmail.com</a></p>
+
+  <footer>
+    <p>PA Bud is an independent project. It is not affiliated with, endorsed by, or sponsored by Microsoft Corporation. Power Automate is a trademark of Microsoft Corporation.</p>
+  </footer>
+</main>
+</body>
+</html>
