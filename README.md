@@ -55,16 +55,6 @@ Under each red **Failed** status it adds a small line like:
 No data leaves your browser; it only talks to the same Microsoft API the
 portal itself uses, with your existing session token.
 
-## Install (unpacked)
-
-1. Open `chrome://extensions`
-2. Turn on **Developer mode** (top right)
-3. **Load unpacked** → select this folder (`pa-bud`)
-4. Reload the Power Automate flow page (full reload, F5 — the extension must be
-   in place before the page loads so it can see the run-list request)
-
-Works in Edge too (`edge://extensions`).
-
 ## Troubleshooting
 
 Built against the July 2026 portal; Microsoft's internal API and DOM are
