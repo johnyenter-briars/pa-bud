@@ -1,6 +1,6 @@
 # PA Bud
 
-Chrome extension for Power Automate that shows **why** each failed flow run
+Chrome and Firefox extension for Power Automate that shows **why** each failed flow run
 failed, directly in the
 28-day run history table (and the "All runs" page), so you don't have to open
 every failed run one by one.
@@ -10,8 +10,49 @@ Under each red **Failed** status it adds a small line like:
 > `Action 'Send_email_to_prospect' failed: You are not authorized to send mail
 > on behalf of the specified sending account. (clientRequestId: ...)`
 
+## Project layout and builds
+
+- `chrome/` — Chrome manifest and build script (Chrome 111+).
+- `firefox/` — Firefox manifest and build script (Firefox 140+).
+- `shared/src/` — one shared runtime, including the iteration finder and styles.
+- `shared/icons/` and `shared/tests/` — shared icons and code-level tests.
+
+Following the same convention as ADO Lens, build from the repository root:
+
+```powershell
+.\chrome\build.ps1
+.\firefox\build.ps1
+```
+
+Packages are written to `chrome/dist/pa-bud-chrome-0.4.0.zip` and
+`firefox/dist/pa-bud-firefox-0.4.0.zip`. Both include the same runtime files,
+with `manifest.json` at the archive root. Firefox also includes its add-on ID
+and built-in data-collection declaration. Builds exclude tests and `example.html`.
+The legacy root `dist/` ZIP is an older release.
+
+### Load for testing
+
+- **Chrome:** extract the Chrome ZIP, open `chrome://extensions`, enable
+  Developer mode, and **Load unpacked** using the extracted folder.
+- **Firefox:** extract the Firefox ZIP, open `about:debugging`, choose
+  **This Firefox → Load Temporary Add-on**, and select its `manifest.json`.
+
+The repository root is no longer an unpacked extension. If you previously
+loaded it in Chrome, load the extracted Chrome package instead. After code
+changes, rebuild and re-extract your package, reload the extension, and refresh
+the Power Automate page. Firefox temporary installations last until restart;
+normal distribution requires a Mozilla-signed package.
+
+Both browsers run the scripts in the page's `MAIN` world at `document_start`
+so the existing network interception works without a separate injection bridge
+([Mozilla documentation](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/content_scripts)).
+
 ## Features
 
+- **Find a loop iteration** — on an individual run, each Apply to each card
+  has a **Find iteration** button. Enter `item()['id'] == 3`, search, then click
+  **Go to 3** to select that iteration in the existing viewer. Matches include
+  an item preview; multiple matches can be visited individually.
 - **Error under every failed run** — the same message the run-details banner
   shows, without opening the run. Nested failures (Apply to each / Scope /
   Condition) are drilled via the repetitions API, best-effort.
@@ -55,6 +96,28 @@ Under each red **Failed** status it adds a small line like:
 No data leaves your browser; it only talks to the same Microsoft API the
 portal itself uses, with your existing session token.
 
+### Finding loop items
+
+Reload the unpacked extension after updating, then refresh the Power Automate
+run page. Open a specific run (`.../flows/{flowId}/runs/{runId}`), expand an
+Apply to each, and click **Find iteration**. If the finder is waiting for the
+API address, click a loop arrow once and search again.
+
+The finder searches the loop's recorded `foreachItems` input array, not a
+child action's potentially transformed output. It uses the portal's captured
+API address and downloads the input through its signed link. Searches do not
+resubmit or execute the flow. Run data is held in memory and cleared when the
+run changes. Secure/unavailable inputs cannot be searched. Nested loops need
+their current parent repetition loaded in the viewer.
+
+Supported expressions include property/index access, `==`, `===`, `!=`, `!==`,
+`<`, `<=`, `>`, `>=`, `&&`, `||`, `!`, and parentheses. Available functions:
+`item()`, zero-based `index()`, `equals`, `contains`, `startsWith`, `endsWith`,
+`empty`, `length`, and `toLower`. This is a small JSON expression language,
+not arbitrary JavaScript or the full Power Automate expression language.
+
+Code-level checks: `node --test shared/tests/*.test.cjs`.
+
 ## Troubleshooting
 
 Built against the July 2026 portal; Microsoft's internal API and DOM are
@@ -63,7 +126,7 @@ undocumented and can change. If nothing appears:
 - Open DevTools → Console and inspect `window.__paRunErrorsState`:
   - `runs` empty → the run-list request wasn't captured. Check the Network tab
     for the request that loads run history (filter on `runs?`) and note its
-    URL shape — the regex in `main.js` (`RUNS_RE`) may need adjusting.
+    URL shape — the regex in `shared/src/main.js` (`RUNS_RE`) may need adjusting.
   - `runs` populated but no text in the table → the row matching failed.
     The date parser expects the `Jul 20, 10:07 AM` format; a different locale
     or column layout needs a tweak in `DATE_RE` / `annotate()`.
@@ -79,6 +142,6 @@ undocumented and can change. If nothing appears:
 
 - English UI only (matches on the literal text `Failed` and `AM`/`PM` dates).
 - Commercial cloud hosts only; add `make.gov.powerautomate.us` etc. to
-  `manifest.json` for GCC.
+  both browser manifests for GCC.
 - Error text appears a moment after the table renders (one API call per
   failed run, done lazily for visible rows).

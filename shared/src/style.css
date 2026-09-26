@@ -1,0 +1,192 @@
+.pa-find-iteration {
+  display: block;
+  margin: 4px auto;
+  color: #005a9e;
+}
+.pa-iteration-dialog {
+  position: fixed;
+  inset: 72px 24px auto auto;
+  margin: 0;
+  width: min(490px, calc(100vw - 64px));
+  max-height: calc(100vh - 120px);
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 20px;
+  border: 1px solid #c8c6c4;
+  border-radius: 8px;
+  background: #fff;
+  color: #242424;
+  box-shadow: 0 8px 36px #0003;
+  z-index: 2147483647;
+  font: 14px/1.5 'Segoe UI', sans-serif;
+}
+.pa-iteration-heading, .pa-iteration-actions, .pa-iteration-match {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pa-iteration-heading { justify-content: space-between; }
+.pa-iteration-heading h2 { margin: 0; font-size: 20px; }
+.pa-iteration-dialog label { display: block; font-weight: 600; }
+.pa-iteration-dialog input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 9px;
+  margin-top: 5px;
+  border: 1px solid #8a8886;
+  border-radius: 4px;
+  color: #242424;
+  background: #fff;
+  font: 13px Consolas, monospace;
+}
+.pa-iteration-help { color: #605e5c; font-size: 12px; }
+.pa-iteration-status { overflow-wrap: anywhere; }
+.pa-iteration-match { border-top: 1px solid #edebe9; padding: 9px 0; }
+.pa-iteration-match button { flex-shrink: 0; }
+.pa-iteration-match code { white-space: pre-wrap; overflow-wrap: anywhere; min-width: 0; font-size: 12px; }
+.pa-iteration-dialog [hidden] { display: none; }
+.pa-run-error {
+  font-size: 11px;
+  line-height: 1.35;
+  color: #a4262c;
+  margin-top: 2px;
+  max-width: 480px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  position: relative;
+}
+.pa-run-error:hover {
+  text-decoration: underline;
+}
+.pa-run-error.pa-copied::after {
+  content: 'Copied!';
+  position: absolute;
+  top: -18px;
+  left: 0;
+  background: #323130;
+  color: #fff;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+/* Let a row grow tall enough to show the message instead of clipping it. */
+[role="row"]:has(.pa-run-error),
+[role="gridcell"]:has(.pa-run-error),
+[role="cell"]:has(.pa-run-error),
+[role="row"]:has(.pa-flow-lastrun),
+[role="gridcell"]:has(.pa-flow-lastrun),
+[role="cell"]:has(.pa-flow-lastrun) {
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+/* Failed-only filter */
+.pa-hide {
+  display: none !important;
+}
+
+/* Summary bar above the run table */
+.pa-err-summary {
+  margin: 8px 0;
+  padding: 8px 12px;
+  border: 1px solid #edebe9;
+  border-left: 3px solid #a4262c;
+  border-radius: 2px;
+  background: #fdf6f6;
+  font-size: 12px;
+  color: #323130;
+}
+.pa-err-summary-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pa-err-counts {
+  font-weight: 600;
+}
+.pa-err-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pa-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+.pa-btn {
+  font-size: 12px;
+  padding: 3px 10px;
+  border: 1px solid #8a8886;
+  border-radius: 2px;
+  background: #fff;
+  color: #323130;
+  cursor: pointer;
+}
+.pa-btn:hover {
+  background: #f3f2f1;
+}
+.pa-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.pa-err-groups {
+  margin-top: 6px;
+}
+.pa-err-group {
+  color: #a4262c;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.pa-err-note {
+  margin-top: 6px;
+  font-weight: 600;
+  color: #0b6a0b;
+}
+.pa-err-note:empty {
+  display: none;
+}
+
+/* Resubmit row checkbox */
+.pa-resubmit-cb {
+  margin-right: 8px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+/* Flow list: last-run line */
+.pa-flow-lastrun {
+  font-size: 11px;
+  line-height: 1.35;
+  color: #605e5c;
+  margin-top: 2px;
+  max-width: 520px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+  position: relative;
+}
+.pa-flow-lastrun.pa-flow-failed {
+  color: #a4262c;
+}
+.pa-flow-lastrun.pa-copied::after {
+  content: 'Copied!';
+  position: absolute;
+  top: -18px;
+  left: 0;
+  background: #323130;
+  color: #fff;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
