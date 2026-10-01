@@ -1,4 +1,4 @@
-# PA Bud
+# <img src="store-assets/store-icon-128.png" alt="" width="40" height="40"> PA Bud
 
 PA Bud is a Chrome and Firefox helper for Power Automate. It shows failure reasons in run history and finds matching iterations inside **Apply to each** loops.
 
