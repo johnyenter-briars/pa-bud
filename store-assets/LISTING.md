@@ -52,6 +52,7 @@ For Firefox, run `.\firefox\build.ps1`; its separate package is
 |---|---|---|
 | Store icon (128×128, required) | `store-icon-128.png` | |
 | Screenshot (1280×800, ≥1 required) | `screenshot-1280x800.png` | Feature overview card. **Strongly recommended:** add a real screenshot of the run history with errors showing — crop/blur tenant names, flow names, and request IDs first. Real screenshots convert better and reviewers prefer them. |
+| Iteration finder UI crops | `screenshots/` | Real screenshots used in the README. These small crops are not sized for a Chrome Web Store screenshot upload. |
 | Small promo tile (440×280, optional) | `promo-small-440x280.png` | |
 | Marquee (1400×560, optional) | `promo-marquee-1400x560.png` | Needed only if featured |
 

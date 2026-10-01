@@ -73,6 +73,21 @@ so the existing network interception works without a separate injection bridge
   picked up automatically, so the summary bar, CSV export, and bulk resubmit
   cover everything you've scrolled through.
 
+### Iteration finder screenshots
+
+The button appears beneath an expanded **Apply to each** loop:
+
+![Find iteration button in an expanded loop](store-assets/screenshots/screenshot-1-finditerationbutton.png)
+
+Search the loop's items and choose a matching iteration:
+
+![Expression and matching iteration results](store-assets/screenshots/screenshot-2-expressionand%20resultswindow.png)
+
+The run-history toolbar groups failures and offers filtering, CSV export, and
+bulk resubmission:
+
+![Run-history controls above the flow runs](store-assets/screenshots/screenshot-3-exportoutputs.png)
+
 ## How it works
 
 - The extension runs inside `make.powerautomate.com` in the page's own JS world.
