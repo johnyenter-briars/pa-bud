@@ -1,96 +1,51 @@
-# Chrome Web Store listing kit
-
-Everything to paste into the [developer dashboard](https://chrome.google.com/webstore/devconsole)
-(one-time $5 registration fee per developer account).
+# Store listing copy
 
 ## Package
 
-Run `.\chrome\build.ps1`, then upload `chrome/dist/pa-bud-chrome-0.4.3.zip`
-(manifest + shared runtime, including the iteration finder + styles + icons).
-For Firefox, run `.\firefox\build.ps1`; its separate package is
-`firefox/dist/pa-bud-firefox-0.4.3.zip` for Mozilla Add-ons signing/distribution.
+Build from the repository root. Upload `chrome/dist/pa-bud-chrome-0.4.4.zip` to the Chrome Web Store, or use `firefox/dist/pa-bud-firefox-0.4.4.zip` for Firefox signing.
 
-## Store listing fields
+## Listing text
 
 **Name:** PA Bud
 
-**Summary (132 chars max):**
-> See why every failed Power Automate run failed — right in the run history,
-> with grouping, filtering, CSV export, and bulk resubmit.
+**Summary:** Debug Power Automate flows: find loop iterations, understand failed runs, and work through run history.
 
-**Description:**
-> Stop opening failed flow runs one by one. This extension shows the real
-> failure reason for every failed run directly in the Power Automate run
-> history — the same error message you'd see in the banner after clicking
-> into the run, including the failed action's name and request IDs.
->
-> Features:
-> • Error message under every Failed row, in the 28-day history and the All
->   runs page (nested Apply to each / Scope failures are drilled into)
-> • Click any error to copy it
-> • Summary bar groups identical errors with counts
-> • "Failed only" filter to hide successful runs
-> • Export all loaded runs (with errors and links) to CSV
-> • Select failed runs and bulk-resubmit them with one click
-> • Flow list pages show each flow's last-run status and error
->
-> Privacy: the extension runs entirely in your browser. It reuses your
-> existing Power Automate session to call the same Microsoft API the portal
-> itself uses, and sends no data anywhere else. No analytics, no tracking,
-> no external servers.
->
-> Not affiliated with or endorsed by Microsoft. Power Automate is a trademark
-> of Microsoft Corporation.
+**Description** (paste as plain text):
 
-**Category:** Workflow & Planning (or Developer Tools)
+```text
+PA Bud is a debugging companion for Power Automate flows. It helps you find loop iterations, understand failed runs, and work through run history.
+
+Find loop iterations: Enter a condition such as item()['id'] == 3 and jump directly to a match.
+See failures inline: Read and copy the error under each failed run without opening it. This works in the 28-day history and All runs view.
+Triage runs: Group identical errors, show only failed runs, export loaded runs to CSV, or select failed runs for resubmission.
+Scan flow lists: See each flow's last-run status and error.
+
+PA Bud uses your existing Power Automate session to read run details from Microsoft's APIs. It displays and searches them in your browser. There is no PA Bud server or analytics service.
+
+English UI and commercial Power Automate hosts only. PA Bud is an independent project and is not affiliated with Microsoft.
+```
+
+**Category:** Workflow & Planning
 
 **Language:** English
 
-## Graphics (all in this folder)
+## Graphics
 
 | Asset | File | Notes |
 |---|---|---|
-| Store icon (128×128, required) | `store-icon-128.png` | |
-| Screenshot (1280×800, ≥1 required) | `screenshot-1280x800.png` | Feature overview card. **Strongly recommended:** add a real screenshot of the run history with errors showing — crop/blur tenant names, flow names, and request IDs first. Real screenshots convert better and reviewers prefer them. |
-| Iteration finder UI crops | `screenshots/` | Real screenshots used in the README. These small crops are not sized for a Chrome Web Store screenshot upload. |
-| Small promo tile (440×280, optional) | `promo-small-440x280.png` | |
-| Marquee (1400×560, optional) | `promo-marquee-1400x560.png` | Needed only if featured |
+| Store icon | `store-icon-128.png` | 128×128 |
+| Store screenshot | `screenshot-1280x800.png` | 1280×800 |
+| README screenshots | `screenshots/` | Feature crops; too small for a store screenshot upload |
+| Small promo tile | `promo-small-440x280.png` | 440×280 |
+| Marquee | `promo-marquee-1400x560.png` | 1400×560 |
 
 ## Privacy tab answers
 
-- **Single purpose:** Displays the failure reason of failed Power Automate
-  flow runs inline in the run history, with related triage tools (grouping,
-  filtering, CSV export, resubmit).
-- **Permission justifications:**
-  - *Content scripts on make.powerautomate.com / flow.microsoft.com:* required
-    to read the run history table and display error details in it. The
-    extension calls the same Microsoft Power Automate API the portal uses,
-    authenticated by the user's existing session.
-  - *No host permissions, no storage, no background service worker are
-    requested.*
-- **Remote code:** No — all code is packaged; nothing is loaded from servers.
-- **Data usage:** Does not collect, transmit, or sell any user data. All
-  processing happens locally in the browser. (Check "None" for every data
-  category.)
+- **Purpose:** Help debug Power Automate flows by finding loop iterations, showing failure details, and organizing run history.
+- **Site access:** The content script runs on Power Automate pages to read the run view and call Microsoft's Power Automate API with the user's existing session.
+- **Remote code:** None; all extension code is in the package.
+- **Data handling:** PA Bud has no server or analytics. It keeps run data in browser memory and saves only the “Failed only” preference in the site's local storage. API requests go to Microsoft.
 
 ## Privacy policy
 
-The dashboard requires a privacy policy URL. A ready-to-host page is at
-`privacy-policy.html` in the project root. Easiest way to get a URL:
-
-1. Create a public GitHub repo (e.g. `pa-bud`), add the file
-2. Repo → Settings → Pages → Deploy from branch → `main`, root
-3. URL becomes `https://<user>.github.io/pa-bud/privacy-policy.html`
-
-(Or open a gist at gist.github.com, paste the file, and use the gist link —
-the dashboard accepts any public URL.)
-
-## Submission checklist
-
-1. Zip uploaded, all fields above pasted in
-2. At least one screenshot uploaded (add a real one if possible)
-3. Privacy policy URL set
-4. Visibility: choose **Unlisted** if this is just for you/colleagues —
-   it skips no review but avoids cluttering search
-5. Submit for review — content-script-only extensions typically clear review
-   in a few days
+Host `privacy-policy.html` from the repository root and use its public URL in the store form.

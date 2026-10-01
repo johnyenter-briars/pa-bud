@@ -72,14 +72,14 @@
 <body>
 <main>
   <h1>Privacy Policy</h1>
-  <p class="subtitle">PA Bud — Chrome and Firefox extension for Power Automate<br>Effective date: July 20, 2026</p>
+  <p class="subtitle">PA Bud — Chrome and Firefox debugging companion for Power Automate<br>Effective date: October 1, 2026</p>
 
   <div class="tldr">
-    <p><strong>Short version:</strong> this extension does not collect, store, transmit, or share any data about you. Everything it does happens inside your own browser, on Power Automate pages, using your existing Microsoft login. Nothing ever leaves your machine.</p>
+    <p><strong>Short version:</strong> PA Bud has no server or analytics. It uses your existing Microsoft session to request flow run data from Microsoft's Power Automate service and shows the results in your browser.</p>
   </div>
 
   <h2>What the extension does</h2>
-  <p>PA Bud runs only on Microsoft Power Automate pages (<code>make.powerautomate.com</code> and <code>flow.microsoft.com</code>). It reads the flow run history shown on the page and retrieves failure details for failed runs by calling the same Microsoft Power Automate API the portal itself uses, authenticated by the session you are already signed in with. The error details are displayed directly in the page.</p>
+  <p>PA Bud helps debug Power Automate flows on <code>make.powerautomate.com</code> and <code>flow.microsoft.com</code>. It shows failure details in run history, finds matching Apply to each iterations, and provides filtering, CSV export, and resubmission controls. It calls Microsoft's Power Automate API using the session you are already signed in with.</p>
 
   <h2>Data collection</h2>
   <p>None. The extension does not collect, log, or transmit:</p>
@@ -97,7 +97,7 @@
   <p>The extension communicates exclusively with Microsoft's Power Automate service, and only in response to your actions on Power Automate pages. There are no third-party services, no external servers, no analytics providers, and no advertising of any kind. All code ships inside the extension package; nothing is loaded remotely.</p>
 
   <h2>Permissions</h2>
-  <p>The extension requests access only to Power Automate pages, which it needs to display error details in the run history. It requests no other browser permissions — no access to your other tabs, history, bookmarks, or any other site.</p>
+  <p>The extension requests access only to Power Automate pages, where it displays debugging controls and run details. It requests no other browser permissions — no access to your other tabs, history, bookmarks, or any other site.</p>
 
   <h2>Changes to this policy</h2>
   <p>If a future version of the extension ever changes how it handles data, this policy will be updated before that version is published, and the extension's store listing will reflect it.</p>
