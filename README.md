@@ -91,11 +91,9 @@ bulk resubmission:
 ## How it works
 
 - The extension runs inside `make.powerautomate.com` in the page's own JS world.
-- It wraps `fetch`/`XMLHttpRequest` to capture the **bearer token** the portal
-  already sends to the flow API, plus the response of the portal's own
+- It wraps `fetch`/`XMLHttpRequest` to capture the **bearer token** the portal already sends to the flow API, plus the response of the portal's own
   run-list call (`.../flows/{flowId}/runs?api-version=...`).
-- For each run with status `Failed`, it calls the same internal API the
-  run-details page uses:
+- For each run with status `Failed`, it calls the same internal API the run-details page uses:
   1. `GET .../runs/{runId}?$expand=properties/actions` → the run with all of
      its actions and their statuses.
   2. For the failed action, it downloads the action's `outputsLink` blob
@@ -107,8 +105,7 @@ bulk resubmission:
   the same minute are resolved by order, since both are sorted newest-first)
   and injects the message under the status text.
 
-No data leaves your browser; it only talks to the same Microsoft API the
-portal itself uses, with your existing session token.
+**No data leaves your browser; it only talks to the same Microsoft API the portal itself uses, with your existing session token.**
 
 ### Find an Apply to each iteration
 
@@ -165,3 +162,15 @@ undocumented and can change. If nothing appears:
   both browser manifests for GCC.
 - Error text appears a moment after the table renders (one API call per
   failed run, done lazily for visible rows).
+
+## Contributing
+
+Issues and pull requests are welcome, but changes not guaranteed. Please include a brief description of the change and, when possible, add or update tests.
+
+## AI Disclosure
+
+Portions of this project were developed with the assistance of AI tools; all changes are reviewed and tested by maintainers.
+
+## License
+
+See [LICENSE](LICENSE).
