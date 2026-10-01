@@ -1,9 +1,8 @@
 # PA Bud
 
-Chrome and Firefox extension for Power Automate that shows **why** each failed flow run
-failed, directly in the
-28-day run history table (and the "All runs" page), so you don't have to open
-every failed run one by one.
+PA Bud is a Chrome and Firefox helper for Power Automate. It shows failure
+reasons directly in run history and helps you find the right iteration inside
+an **Apply to each** loop.
 
 Under each red **Failed** status it adds a small line like:
 
@@ -24,8 +23,8 @@ Following the same convention as ADO Lens, build from the repository root:
 .\firefox\build.ps1
 ```
 
-Packages are written to `chrome/dist/pa-bud-chrome-0.4.0.zip` and
-`firefox/dist/pa-bud-firefox-0.4.0.zip`. Both include the same runtime files,
+Packages are written to `chrome/dist/pa-bud-chrome-0.4.3.zip` and
+`firefox/dist/pa-bud-firefox-0.4.3.zip`. Both include the same runtime files,
 with `manifest.json` at the archive root. Firefox also includes its add-on ID
 and built-in data-collection declaration. Builds exclude tests and `example.html`.
 The legacy root `dist/` ZIP is an older release.
@@ -49,10 +48,10 @@ so the existing network interception works without a separate injection bridge
 
 ## Features
 
-- **Find a loop iteration** — on an individual run, each Apply to each card
-  has a **Find iteration** button. Enter `item()['id'] == 3`, search, then click
-  **Go to 3** to select that iteration in the existing viewer. Matches include
-  an item preview; multiple matches can be visited individually.
+- **Find a loop iteration** — open an individual run, expand an **Apply to each**
+  card, and click **Find iteration**. Search with `item()['id'] == 3`, then
+  choose a match to jump straight to it. You can inspect and visit multiple
+  matches.
 - **Error under every failed run** — the same message the run-details banner
   shows, without opening the run. Nested failures (Apply to each / Scope /
   Condition) are drilled via the repetitions API, best-effort.
@@ -96,25 +95,31 @@ so the existing network interception works without a separate injection bridge
 No data leaves your browser; it only talks to the same Microsoft API the
 portal itself uses, with your existing session token.
 
-### Finding loop items
+### Find an Apply to each iteration
 
-Reload the unpacked extension after updating, then refresh the Power Automate
-run page. Open a specific run (`.../flows/{flowId}/runs/{runId}`), expand an
-Apply to each, and click **Find iteration**. If the finder is waiting for the
-API address, click a loop arrow once and search again.
+On a run page, expand the loop and click **Find iteration**. Enter a condition
+such as `item()['id'] == 3`, click **Find matches**, then click **Go to 3** (or
+another matching iteration). Results show a preview of each matching item.
 
-The finder searches the loop's recorded `foreachItems` input array, not a
-child action's potentially transformed output. It uses the portal's captured
-API address and downloads the input through its signed link. Searches do not
-resubmit or execute the flow. Run data is held in memory and cleared when the
-run changes. Secure/unavailable inputs cannot be searched. Nested loops need
-their current parent repetition loaded in the viewer.
+| Kind | Supported syntax | Example |
+| --- | --- | --- |
+| Current item and properties | `item()`, `item().name`, `item()['name']`, `item()[0]`, `item()?['name']` | `item()['id'] == 3` |
+| Values | Numbers, quoted strings, `true`, `false`, `null` | `item().active == true` |
+| Comparisons | `==`, `!=`, `===`, `!==`, `<`, `<=`, `>`, `>=` | `item().amount >= 100` |
+| Logic | `&&`, `\|\|`, `!`, parentheses | `item().active && item().amount > 10` |
+| Iteration index | `index()` (starts at 0) | `index() == 2` |
+| Matching helpers | `equals(a, b)`, `contains(a, b)`, `startsWith(a, b)`, `endsWith(a, b)` | `contains(item().name, 'test')` |
+| Value helpers | `empty(a)`, `length(a)`, `toLower(a)` | `toLower(item().status) == 'failed'` |
 
-Supported expressions include property/index access, `==`, `===`, `!=`, `!==`,
-`<`, `<=`, `>`, `>=`, `&&`, `||`, `!`, and parentheses. Available functions:
-`item()`, zero-based `index()`, `equals`, `contains`, `startsWith`, `endsWith`,
-`empty`, `length`, and `toLower`. This is a small JSON expression language,
-not arbitrary JavaScript or the full Power Automate expression language.
+`==` and `!=` allow normal JavaScript value conversion (for example, `3` and
+`'3'` match); `===`, `!==`, and `equals(a, b)` compare without conversion. The
+finder supports this small expression set, not arbitrary JavaScript or the full
+Power Automate expression language.
+
+The finder downloads the loop's recorded input array once, evaluates the
+condition locally, and caches the array for later searches. It does not make
+one request per iteration. Secure or unavailable inputs cannot be searched;
+nested loops need their current parent iteration loaded first.
 
 Code-level checks: `node --test shared/tests/*.test.cjs`.
 

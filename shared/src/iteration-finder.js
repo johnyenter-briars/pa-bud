@@ -195,7 +195,7 @@
       const heading = element('div', 'pa-iteration-heading'); heading.append(title, close);
       const label = element('label', '', 'Match condition'); label.htmlFor = 'pa-iteration-expression';
       const expression = element('input'); expression.id = 'pa-iteration-expression';
-      expression.type = 'text'; expression.value = "item()['id'] == 3"; expression.spellcheck = false;
+      expression.type = 'text'; expression.value = 'item()'; expression.spellcheck = false;
       const help = element('p', 'pa-iteration-help', "Examples: item()['id'] == 3 · item().status == 'Failed' · contains(item().name, 'test'). Use && / || to combine conditions. index() is zero-based.");
       const form = element('form');
       const find = element('button', 'pa-btn', 'Find matches'); find.type = 'submit';

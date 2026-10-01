@@ -1,24 +1,41 @@
+/* Always dark; scoped to PA Bud rather than changing the portal's theme. */
+:where(.pa-btn, .pa-iteration-dialog, .pa-err-summary, .pa-run-error,
+       .pa-flow-lastrun, .pa-resubmit-cb) {
+  --pa-bg: #1c1e22;
+  --pa-surface: #25282e;
+  --pa-hover: #30343c;
+  --pa-border: #3b4049;
+  --pa-text: #e6e8ed;
+  --pa-muted: #a9afbb;
+  --pa-accent: #9bc2f2;
+  --pa-error: #f0a1a8;
+  color-scheme: dark;
+}
 .pa-find-iteration {
+  display: none;
+  margin: 6px auto;
+}
+.react-flow__node[data-id$="-#scope"]:has(button[aria-label^="Collapse Apply to each"][aria-expanded="true"]) > .pa-find-iteration {
   display: block;
-  margin: 4px auto;
-  color: #005a9e;
 }
 .pa-iteration-dialog {
   position: fixed;
   inset: 72px 24px auto auto;
   margin: 0;
-  width: min(490px, calc(100vw - 64px));
-  max-height: calc(100vh - 120px);
+  width: min(490px, calc(100vw - 48px));
+  max-height: calc(100vh - 96px);
   overflow: auto;
   box-sizing: border-box;
   padding: 20px;
-  border: 1px solid #c8c6c4;
+  border: 1px solid var(--pa-border);
   border-radius: 8px;
-  background: #fff;
-  color: #242424;
-  box-shadow: 0 8px 36px #0003;
+  background: var(--pa-bg);
+  color: var(--pa-text);
+  box-shadow: 0 4px 16px #0003;
   z-index: 2147483647;
-  font: 14px/1.5 'Segoe UI', sans-serif;
+  font: 13px/1.55 'Segoe UI', system-ui, sans-serif;
+  text-align: left;
+  scrollbar-color: #545b68 var(--pa-bg);
 }
 .pa-iteration-heading, .pa-iteration-actions, .pa-iteration-match {
   display: flex;
@@ -26,46 +43,55 @@
   gap: 10px;
 }
 .pa-iteration-heading { justify-content: space-between; }
-.pa-iteration-heading h2 { margin: 0; font-size: 20px; }
-.pa-iteration-dialog label { display: block; font-weight: 600; }
+.pa-iteration-heading h2 { margin: 0; color: var(--pa-text); font: 600 18px/1.4 'Segoe UI', system-ui, sans-serif; }
+.pa-iteration-dialog > p:not(.pa-iteration-status) { margin: 4px 0 20px; color: var(--pa-muted); overflow-wrap: anywhere; }
+.pa-iteration-dialog form { margin: 0; }
+.pa-iteration-dialog label { display: block; color: var(--pa-text); font-weight: 500; }
 .pa-iteration-dialog input {
   box-sizing: border-box;
   width: 100%;
-  padding: 9px;
-  margin-top: 5px;
-  border: 1px solid #8a8886;
-  border-radius: 4px;
-  color: #242424;
-  background: #fff;
-  font: 13px Consolas, monospace;
+  padding: 10px 11px;
+  margin-top: 7px;
+  border: 1px solid var(--pa-border);
+  border-radius: 5px;
+  color: var(--pa-text);
+  background: #15171b;
+  caret-color: var(--pa-accent);
+  box-shadow: none;
+  font: 13px/1.5 Consolas, 'Cascadia Code', monospace;
 }
-.pa-iteration-help { color: #605e5c; font-size: 12px; }
-.pa-iteration-status { overflow-wrap: anywhere; }
-.pa-iteration-match { border-top: 1px solid #edebe9; padding: 9px 0; }
-.pa-iteration-match button { flex-shrink: 0; }
-.pa-iteration-match code { white-space: pre-wrap; overflow-wrap: anywhere; min-width: 0; font-size: 12px; }
+.pa-iteration-help { margin: 10px 0 16px; color: var(--pa-muted); font-size: 12px; }
+.pa-iteration-actions { flex-wrap: wrap; }
+.pa-iteration-status { margin: 18px 0 0; padding-top: 14px; border-top: 1px solid var(--pa-border); color: var(--pa-muted); font-size: 12px; overflow-wrap: anywhere; }
+.pa-iteration-results:not(:empty) { margin-top: 12px; }
+.pa-iteration-match { align-items: flex-start; border-top: 1px solid #30343c; padding: 12px 0; }
+.pa-iteration-match:first-child { border-top: 0; }
+.pa-iteration-match button { flex-shrink: 0; color: var(--pa-accent); }
+.pa-iteration-match code { padding: 5px 0; background: transparent; color: var(--pa-text); white-space: pre-wrap; overflow-wrap: anywhere; min-width: 0; font: 12px/1.6 Consolas, monospace; }
 .pa-iteration-dialog [hidden] { display: none; }
 .pa-run-error {
   font-size: 11px;
   line-height: 1.35;
-  color: #a4262c;
-  margin-top: 2px;
+  color: var(--pa-error);
+  margin-top: 4px;
   max-width: 480px;
   white-space: normal;
   overflow-wrap: anywhere;
   cursor: pointer;
   position: relative;
 }
-.pa-run-error:hover {
+.pa-run-error:hover, .pa-flow-lastrun:hover {
+  background: var(--pa-surface);
   text-decoration: underline;
 }
 .pa-run-error.pa-copied::after {
   content: 'Copied!';
   position: absolute;
-  top: -18px;
+  top: -26px;
   left: 0;
-  background: #323130;
-  color: #fff;
+  background: var(--pa-surface);
+  color: var(--pa-text);
+  border: 1px solid var(--pa-border);
   font-size: 10px;
   padding: 1px 6px;
   border-radius: 3px;
@@ -89,14 +115,13 @@
 
 /* Summary bar above the run table */
 .pa-err-summary {
-  margin: 8px 0;
-  padding: 8px 12px;
-  border: 1px solid #edebe9;
-  border-left: 3px solid #a4262c;
-  border-radius: 2px;
-  background: #fdf6f6;
-  font-size: 12px;
-  color: #323130;
+  margin: 10px 0;
+  padding: 14px 16px;
+  border: 1px solid var(--pa-border);
+  border-radius: 6px;
+  background: var(--pa-bg);
+  font: 12px/1.5 'Segoe UI', system-ui, sans-serif;
+  color: var(--pa-text);
 }
 .pa-err-summary-top {
   display: flex;
@@ -117,47 +142,75 @@
 .pa-toggle {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 7px;
   cursor: pointer;
   user-select: none;
 }
 .pa-btn {
-  font-size: 12px;
-  padding: 3px 10px;
-  border: 1px solid #8a8886;
-  border-radius: 2px;
-  background: #fff;
-  color: #323130;
+  appearance: none;
+  box-sizing: border-box;
+  min-height: 30px;
+  font: 500 12px/1.4 'Segoe UI', system-ui, sans-serif;
+  padding: 5px 11px;
+  border: 1px solid var(--pa-border);
+  border-radius: 5px;
+  background: var(--pa-surface);
+  color: var(--pa-text);
+  box-shadow: none;
+  text-align: center;
   cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
 }
-.pa-btn:hover {
-  background: #f3f2f1;
+.pa-btn:hover:not(:disabled) {
+  background: var(--pa-hover);
+  border-color: #596171;
 }
+.pa-btn:active:not(:disabled) { background: #363c46; }
+.pa-btn.pa-find-iteration { color: var(--pa-accent); }
+.pa-iteration-heading .pa-btn { background: transparent; color: var(--pa-muted); }
+.pa-iteration-actions button[type="submit"] { background: #29425b; border-color: #466487; color: #e1edff; }
+.pa-iteration-actions button[type="submit"]:hover:not(:disabled) { background: #344f6d; }
+.pa-btn:focus-visible, .pa-iteration-dialog input:focus-visible,
+.pa-toggle input:focus-visible, .pa-resubmit-cb:focus-visible {
+  outline: 2px solid #9bc2f2;
+  outline-offset: 3px;
+}
+.pa-iteration-dialog input:focus { border-color: var(--pa-accent); }
 .pa-btn:disabled {
   opacity: 0.5;
   cursor: default;
 }
-.pa-err-groups {
-  margin-top: 6px;
+.pa-err-groups:not(:empty) {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #30343c;
 }
 .pa-err-group {
-  color: #a4262c;
-  margin-top: 2px;
+  color: var(--pa-error);
+  margin-top: 4px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
 }
 .pa-err-note {
-  margin-top: 6px;
-  font-weight: 600;
-  color: #0b6a0b;
+  margin-top: 10px;
+  font-weight: 500;
+  color: #a1d4b4;
 }
 .pa-err-note:empty {
   display: none;
 }
 
 /* Resubmit row checkbox */
+.pa-toggle input, .pa-resubmit-cb {
+  width: 14px;
+  height: 14px;
+  accent-color: #9bc2f2;
+  color-scheme: dark;
+  cursor: pointer;
+}
+.pa-toggle input { margin: 0; }
 .pa-resubmit-cb {
   margin-right: 8px;
   vertical-align: middle;
@@ -168,8 +221,8 @@
 .pa-flow-lastrun {
   font-size: 11px;
   line-height: 1.35;
-  color: #605e5c;
-  margin-top: 2px;
+  color: var(--pa-muted);
+  margin-top: 4px;
   max-width: 520px;
   white-space: normal;
   overflow-wrap: anywhere;
@@ -177,16 +230,31 @@
   position: relative;
 }
 .pa-flow-lastrun.pa-flow-failed {
-  color: #a4262c;
+  color: var(--pa-error);
 }
 .pa-flow-lastrun.pa-copied::after {
   content: 'Copied!';
   position: absolute;
-  top: -18px;
+  top: -26px;
   left: 0;
-  background: #323130;
-  color: #fff;
+  background: var(--pa-surface);
+  color: var(--pa-text);
+  border: 1px solid var(--pa-border);
   font-size: 10px;
   padding: 1px 6px;
   border-radius: 3px;
+}
+
+/* Keep inline messages readable even if the surrounding portal is light. */
+.pa-run-error, .pa-flow-lastrun {
+  width: fit-content;
+  box-sizing: border-box;
+  padding: 5px 8px;
+  border: 1px solid var(--pa-border);
+  border-radius: 4px;
+  background: var(--pa-bg);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pa-btn { transition: none; }
 }

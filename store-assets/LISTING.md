@@ -5,10 +5,10 @@ Everything to paste into the [developer dashboard](https://chrome.google.com/web
 
 ## Package
 
-Run `.\chrome\build.ps1`, then upload `chrome/dist/pa-bud-chrome-0.4.0.zip`
+Run `.\chrome\build.ps1`, then upload `chrome/dist/pa-bud-chrome-0.4.3.zip`
 (manifest + shared runtime, including the iteration finder + styles + icons).
 For Firefox, run `.\firefox\build.ps1`; its separate package is
-`firefox/dist/pa-bud-firefox-0.4.0.zip` for Mozilla Add-ons signing/distribution.
+`firefox/dist/pa-bud-firefox-0.4.3.zip` for Mozilla Add-ons signing/distribution.
 
 ## Store listing fields
 
