@@ -2,6 +2,17 @@
 (() => {
   'use strict';
   window.__paCreateIterationFinder = ({ fetch: request, tokenFor }) => {
+    // The portal may treat Space as a canvas shortcut while the finder is open.
+    // Stop it reaching page handlers without preventing normal text entry.
+    function keepFinderSpaceLocal(event) {
+      if ((event.key === ' ' || event.code === 'Space') &&
+          document.activeElement?.closest?.('.pa-iteration-dialog')) {
+        event.stopPropagation();
+      }
+    }
+    for (const type of ['keydown', 'keypress', 'keyup']) {
+      window.addEventListener(type, keepFinderSpaceLocal, true);
+    }
     const RUN = /\/environments\/([^/]+)\/(?:solutions\/[^/]+\/)?flows\/([^/]+)\/runs\/([^/?#]+)/i;
     const API = /^(.*\/providers\/Microsoft\.(?:Flow|ProcessSimple)\/environments\/([^/]+)\/flows\/([^/]+)\/runs\/([^/?#]+))(?:\/actions\/([^/?#]+)(?:\/repetitions\/([^/?#]+))?)?/i;
     let context = '', endpoint = null, dialog = null, controller = null;

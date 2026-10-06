@@ -10,13 +10,32 @@ const api = `https://us.api.flow.microsoft.com//providers/Microsoft.Flow/environ
 function setup(pageFlow = flow, resources = []) {
   const pathname = `/environments/${env}/solutions/test-solution/flows/${pageFlow}/runs/${run}`;
   const logs = [];
+  const keyListeners = new Map();
   const sandbox = { URL, location: { pathname, href: `https://make.powerautomate.com${pathname}` },
-    document: { querySelectorAll: () => [] }, console: { info: (...args) => logs.push(args) },
-    window: { performance: { getEntriesByType: () => resources.map(name => ({ name })) } } };
+    document: { querySelectorAll: () => [], activeElement: null }, console: { info: (...args) => logs.push(args) },
+    window: { performance: { getEntriesByType: () => resources.map(name => ({ name })) },
+      addEventListener: (type, listener, capture) => keyListeners.set(type, { listener, capture }) } };
   vm.runInNewContext(source, sandbox);
   const finder = sandbox.window.__paCreateIterationFinder({ fetch: () => { throw new Error('Unexpected network request'); }, tokenFor: () => null });
-  return { finder, logs, sandbox };
+  return { finder, logs, sandbox, keyListeners };
 }
+test('keeps Space in the finder without preventing text input', () => {
+  const { sandbox, keyListeners } = setup();
+  sandbox.document.activeElement = { closest: () => ({}) };
+  for (const type of ['keydown', 'keypress', 'keyup']) {
+    const registration = keyListeners.get(type);
+    assert.equal(registration.capture, true);
+    let stopped = false, prevented = false;
+    registration.listener({ key: ' ', code: 'Space', stopPropagation: () => { stopped = true; },
+      preventDefault: () => { prevented = true; } });
+    assert.equal(stopped, true);
+    assert.equal(prevented, false);
+  }
+  sandbox.document.activeElement = { closest: () => null };
+  let stopped = false;
+  keyListeners.get('keydown').listener({ key: ' ', stopPropagation: () => { stopped = true; } });
+  assert.equal(stopped, false);
+});
 test('captures the reported double-slash URL and matching run', () => {
   const { finder } = setup();
   assert.equal(finder.interested(api), true);
