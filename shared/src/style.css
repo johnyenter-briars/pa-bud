@@ -15,7 +15,8 @@
   display: none;
   margin: 6px auto;
 }
-.react-flow__node[data-id$="-#scope"]:has(button[aria-label^="Collapse Apply to each"][aria-expanded="true"]) > .pa-find-iteration {
+.react-flow__node[data-id$="-#scope"]:has(input[min="1"][max]) > .pa-find-iteration,
+.react-flow__node[data-id$="-#scope"]:has(input[aria-label*=" of "]) > .pa-find-iteration {
   display: block;
 }
 .pa-iteration-dialog {

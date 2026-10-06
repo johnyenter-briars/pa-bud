@@ -1,9 +1,5 @@
 # Store listing copy
 
-## Package
-
-Build from the repository root. Upload `chrome/dist/pa-bud-chrome-0.4.4.zip` to the Chrome Web Store, or use `firefox/dist/pa-bud-firefox-0.4.4.zip` for Firefox signing.
-
 ## Listing text
 
 **Name:** PA Bud

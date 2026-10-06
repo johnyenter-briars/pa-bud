@@ -97,7 +97,7 @@
       // generated Fluent CSS class names are intentionally not used.
       return [...document.querySelectorAll('.react-flow__node[data-id]')].filter((card) =>
         card.getAttribute('data-id').endsWith('-#scope') &&
-        card.querySelector('img[src*="foreach."]'));
+        card.querySelector('img[src*="foreach."], [data-automation-id="card-apply_to_each"], input[min="1"][max], .pa-find-iteration'));
     }
     const loopName = (card) => card.getAttribute('data-id').replace(/-#scope$/, '');
     const pager = (card) => [...card.querySelectorAll('input')].find((input) =>
